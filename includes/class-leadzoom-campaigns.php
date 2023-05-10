@@ -78,6 +78,7 @@ class Leadzoom_Campaigns {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_api();
 		
 		add_action('init', [$this, 'create_post_type']);
 		
@@ -123,6 +124,12 @@ class Leadzoom_Campaigns {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-leadzoom-campaigns-public.php';
+
+		/**
+		 * The class responsible for defining all API that occur in the public-facing
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-leadzoom-campaigns-api.php';
 
 		$this->loader = new Leadzoom_Campaigns_Loader();
 
@@ -178,12 +185,22 @@ class Leadzoom_Campaigns {
 
 	}
 
+	/**
+	 * 
+	 */
 	private function define_api()
 	{
-		$api = new Leadzoom_Campaigns_API();
-		$api->
+		
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/instantly-api.php';
+		$instantlyAPI = new InstantlyAPI;
 
-		$this->loader->add_action('rest_init', $api, 'load');
+		$api = new Leadzoom_Campaigns_API();
+		$api->register_api('route','leadzoom-campaigns/instantly','campaigns', [
+			'methods' => 'GET',
+			'callback' => [$instantlyAPI, 'main']
+		]);
+
+		$this->loader->add_action('rest_api_init', $api, 'load');
 	}
 
 	public function create_post_type()

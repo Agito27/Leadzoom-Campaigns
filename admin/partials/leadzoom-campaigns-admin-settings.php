@@ -15,4 +15,4 @@
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
-<h1>Dashboard</h1>
+<h1>Settings</h1>

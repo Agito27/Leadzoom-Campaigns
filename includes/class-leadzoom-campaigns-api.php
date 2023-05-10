@@ -20,11 +20,14 @@
 
    }
 
+   /**
+    * 
+    */
    public function load()
    {
       foreach ( $this->routes as $route ) {
          if( $route['type'] == 'field' ) {
-            register_rest_field('' ,'' ,'' );
+            register_rest_field($route['object_type'] ,$route['attribute'] ,$route['args'] );
          }
 
          if( $route['type'] == 'route') {
@@ -33,6 +36,9 @@
       }
    }
 
+   /**
+    * 
+    */
    public function register_api( $type, $namespace, $route, $args )
    {
       $this->routes[] = [

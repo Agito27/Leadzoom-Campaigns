@@ -114,9 +114,18 @@ class Leadzoom_Campaigns_Admin {
 
 		add_submenu_page(
 			'leadzoom-dashboard',
+			'Dashboard',
+			'Dashboard',
+			'manage_options',
+			'leadzoom-dashboard',
+			[$this, 'menu_dashboard_callback'],
+		);
+
+		add_submenu_page(
+			'leadzoom-dashboard',
 			'Settings',
 			'Settings',
-			'manage-options',
+			'manage_options',
 			'leadzoom-settings',
 			[$this, 'menu_settings_callback'],
 		);
@@ -127,8 +136,13 @@ class Leadzoom_Campaigns_Admin {
 		
 	}
 
+	public function menu_dashboard_callback()
+	{
+		require_once plugin_dir_url( __FILE__ ) . "/admin/partials/leadzoom-campaigns-admin-display.php";
+	}
+
 	public function menu_settings_callback()
 	{
-
+		require_once plugin_dir_url( __FILE__ ) . "partials/leadzoom-campaigns-admin-settings.php";
 	}
 }
